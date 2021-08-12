@@ -27,4 +27,5 @@ testpaths = [
 ]
 
 [tool.pydocstyle]
-ignore = "D104,D100"
+add-ignore = "D104,D100"
+# convention = "google"
