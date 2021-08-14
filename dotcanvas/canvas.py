@@ -19,8 +19,7 @@ def byte_to_braille(byte: int) -> str:
     :return: the corresponding braille charater
     :rtype: str
     """
-    bits = ([0] * 8 + [*map(int, bin(byte)[2:])])[:-9:-1]
-    return chr(0x2800 + sum(b << p for b, p in zip(bits, BIT_POS)))
+    return chr(0x2800 + sum((1 & byte >> i) << p for i, p in enumerate(BIT_POS)))
 
 
 class Canvas:
@@ -113,10 +112,10 @@ class Canvas:
             if x0 == x1 and y0 == y1:
                 break
             e2 = err * 2
-            if e2 > dy:
+            if e2 >= dy:
                 err += dy
                 x0 += sx
-            if e2 < dx:
+            if e2 <= dx:
                 err += dx
                 y0 += sy
 
@@ -239,16 +238,3 @@ class Canvas:
         self.line(x0, y0, x1, y1)
         self.line(x0, y0, x2, y2)
         self.line(x1, y1, x2, y2)
-
-    @property
-    def as_array(self) -> list[list[bool]]:
-        """Get pixels of canvas."""
-        return [[self[x, y] for x in range(self.width)] for y in range(self.height)]
-
-    def transpose(self):
-        """Transpose the canvas."""
-        T = [*zip(*self.as_array)]
-        self.width, self.height = self.height, self.width
-        for y in range(self.height):
-            for x in range(self.width):
-                self[x, y] = T[y][x]

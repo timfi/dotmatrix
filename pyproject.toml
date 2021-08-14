@@ -14,6 +14,8 @@ mypy = "^0.910"
 pytest-cov = "^2.12.1"
 pydocstyle = {extras = ["toml"], version = "^6.1.1"}
 isort = "^5.9.3"
+ward = "^0.63.0-beta.0"
+coverage = "^5.5"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -25,6 +27,14 @@ addopts = "-ra -q"
 testpaths = [
     "tests",
 ]
+
+[tool.ward]
+path = ["tests"]
+capture-output = true
+order = "standard"
+output-mode = "live"
+fail-limit = 20
+progress-style = ["bar"]
 
 [tool.pydocstyle]
 add-ignore = "D104,D100"

@@ -10,42 +10,35 @@ repos:
     -   id: check-added-large-files
 -   repo: local
     hooks:
-    -   id: isort
-        name: isort
-        stages: [commit]
-        language: system
-        entry: poetry run isort
-        types: [python]
-    -   id: black
-        name: black
-        stages: [commit]
-        language: system
-        entry: poetry run black
-        types: [python]
     -   id: pydocstyle
-        name: pydocstyle
+        name: Check docstrings
         stages: [commit]
         language: system
         entry: poetry run pydocstyle dotcanvas
         types: [python]
         pass_filenames: false
     -   id: mypy
-        name: mypy
+        name: Typecheck python code
         stages: [commit]
         language: system
         entry: poetry run mypy
         types: [python]
-    -   id: pytest
-        name: pytest
+    -   id: ward
+        name: Run unittests
         stages: [commit]
         language: system
-        entry: poetry run pytest
+        entry: poetry run ward
         types: [python]
         pass_filenames: false
-    -   id: pytest-cov
-        name: pytest
-        stages: [push]
+    -   id: isort
+        name: Sort python imports
+        stages: [commit]
         language: system
-        entry: poetry run pytest --cov=dotcanvas --cov-fail-under=100
+        entry: poetry run isort
         types: [python]
-        pass_filenames: false
+    -   id: black
+        name: Format python code
+        stages: [commit]
+        language: system
+        entry: poetry run black
+        types: [python]
