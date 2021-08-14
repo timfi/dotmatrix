@@ -1,4 +1,5 @@
 from math import ceil
+from typing import Optional
 
 BIT_POS = [0, 3, 1, 4, 2, 5, 6, 7]
 
@@ -69,6 +70,40 @@ class Canvas:
         else:
             raise IndexError(f"Out of bounds: {(x,y)}")
 
+    def set(self, x: int, y: int, val: bool):
+        """Set the value of a pixel on the canvas.
+
+        Doesn't fail on out of bounds!
+
+        :param x: x coordinate of the pixel
+        :type x: int
+        :param y: y coordinate of the pixel
+        :type y: int
+        :param val: the value to set the pixel to
+        :type val: bool
+        """
+        try:
+            self[x, y] = True
+        except IndexError:
+            ...
+
+    def get(self, x: int, y: int) -> Optional[bool]:
+        """Set the value of a pixel on the canvas.
+
+        Doesn't fail on out of bounds!
+
+        :param x: x coordinate of the pixel
+        :type x: int
+        :param y: y coordinate of the pixel
+        :type y: int
+        :return: the value of the pixel (if exists)
+        :rtype: Optional[bool]
+        """
+        try:
+            return self[x, y]
+        except IndexError:
+            return None
+
     def render(self) -> str:
         """Render the current canvas state.
 
@@ -82,7 +117,14 @@ class Canvas:
             line = ""
             for char_x in range(char_width):
                 byte = sum(
-                    (3 & self.data >> (y + char_y * 4) * self.width + char_x * 2)
+                    (
+                        (
+                            self.data >> (char_y * 4 + y) * self.width
+                            & 2 ** self.width - 1
+                        )
+                        >> char_x * 2
+                        & 3
+                    )
                     << y * 2
                     for y in range(4)
                 )
@@ -108,7 +150,7 @@ class Canvas:
         err = dx + dy
 
         while 1:
-            self[x0, y0] = True
+            self.set(x0, y0, True)
             if x0 == x1 and y0 == y1:
                 break
             e2 = err * 2
@@ -136,10 +178,10 @@ class Canvas:
         x = 0
         y = r
 
-        self[x0, y0 + r] = True
-        self[x0, y0 - r] = True
-        self[x0 + r, y0] = True
-        self[x0 - r, y0] = True
+        self.set(x0, y0 + r, True)
+        self.set(x0, y0 - r, True)
+        self.set(x0 + r, y0, True)
+        self.set(x0 - r, y0, True)
 
         while x < y:
             if f >= 0:
@@ -150,14 +192,14 @@ class Canvas:
             ddFx += 2
             f += ddFx + 1
 
-            self[x0 + x, y0 + y] = True
-            self[x0 - x, y0 + y] = True
-            self[x0 + x, y0 - y] = True
-            self[x0 - x, y0 - y] = True
-            self[x0 + y, y0 + x] = True
-            self[x0 - y, y0 + x] = True
-            self[x0 + y, y0 - x] = True
-            self[x0 - y, y0 - x] = True
+            self.set(x0 + x, y0 + y, True)
+            self.set(x0 - x, y0 + y, True)
+            self.set(x0 + x, y0 - y, True)
+            self.set(x0 - x, y0 - y, True)
+            self.set(x0 + y, y0 + x, True)
+            self.set(x0 - y, y0 + x, True)
+            self.set(x0 + y, y0 - x, True)
+            self.set(x0 - y, y0 - x, True)
 
     def ellipse(self, x0: int, y0: int, r1: int, r2: int):
         """Draw an ellipse on the canvas.
@@ -177,10 +219,10 @@ class Canvas:
         err = r22 - (2 * r2 - 1) * r12
 
         while 1:
-            self[x0 + dx, y0 + dy] = True
-            self[x0 + dx, y0 - dy] = True
-            self[x0 - dx, y0 + dy] = True
-            self[x0 - dx, y0 - dy] = True
+            self.set(x0 + dx, y0 + dy, True)
+            self.set(x0 + dx, y0 - dy, True)
+            self.set(x0 - dx, y0 + dy, True)
+            self.set(x0 - dx, y0 - dy, True)
 
             e2 = 2 * err
             if e2 < (2 * dx + 1) * r22:
@@ -195,8 +237,8 @@ class Canvas:
 
         while dx < r1:
             dx += 1
-            self[x0 + dx, y0] = True
-            self[x0 - dx, y0] = True
+            self.set(x0 + dx, y0, True)
+            self.set(x0 - dx, y0, True)
 
     def rectangle(self, x0: int, y0: int, x1: int, y1: int):
         """Draw a rectangle on the canvas.

@@ -33,29 +33,37 @@ def _():
 def _():
     with raises(IndexError):
         c[1, 0]
+    assert c.get(1, 0) == None
     with raises(IndexError):
         c[1, 0] = True
+    c.set(1, 0, True)
 
 
 @test("x < 0")  # type: ignore[no-redef]
 def _():
     with raises(IndexError):
         c[-1, 0]
+    assert c.get(-1, 0) == None
     with raises(IndexError):
         c[-1, 0] = True
+    c.set(-1, 0, True)
 
 
 @test("y ≥ width")  # type: ignore[no-redef]
 def _():
     with raises(IndexError):
         c[0, 1]
+    assert c.get(0, 1) == None
     with raises(IndexError):
         c[0, 1] = True
+    c.set(0, 1, True)
 
 
 @test("y < 0")  # type: ignore[no-redef]
 def _():
     with raises(IndexError):
         c[0, -1]
+    assert c.get(0, -1) == None
     with raises(IndexError):
         c[0, -1] = True
+    c.set(0, -1, True)
