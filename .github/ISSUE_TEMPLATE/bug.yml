@@ -8,7 +8,6 @@ body:
       label: Description
       description: Describe your problem in one or two sentences.
       placeholder: The _something function_ produces _some weird error/exception_ when doing _something_ with it.
-      render: markdown
     validations:
       required: true
   - type: textarea
@@ -22,6 +21,7 @@ body:
     attributes:
       label: Output
       description: Show the render result/exception if possible.
+      render: plain
     validations:
       required: true
   - type: textarea
