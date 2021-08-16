@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "dotmatrix"
-version = "0.1.0"
+version = "0.1.1"
 description = "A pixel matrix rendered using braille characters."
-license = "MIT"
+license = "GPL-2.0-or-later"
 authors = ["Tim Fischer <me@timfi.com>"]
 readme = "README.md"
 homepage = "https://github.com/timfi/dotmatrix"

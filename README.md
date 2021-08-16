@@ -1,5 +1,7 @@
-# dotmatrix
+# ⣿ dotmatrix
 _A dot matrix rendered using braille characters._
+
+![PyPI](https://img.shields.io/pypi/v/dotmatrix) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/dotmatrix) ![PyPI - License](https://img.shields.io/pypi/l/dotmatrix) [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ## Description
 
