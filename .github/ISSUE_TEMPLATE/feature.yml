@@ -8,7 +8,6 @@ body:
       label: Description
       description: Describe your idea in one or two sentences.
       placeholder: I think it would be cool to have a _something function_ that can draw _something_.
-      render: markdown
     validations:
       required: true
   - type: textarea
@@ -22,6 +21,7 @@ body:
     attributes:
       label: Output
       description: Show the expected render result if possible.
+      render: plain
     validations:
       required: false
   - type: textarea
