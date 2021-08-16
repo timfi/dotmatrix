@@ -1,6 +1,6 @@
 from array import array
 from math import ceil
-from typing import Callable, Iterable, Optional, Protocol, Sequence, TypeVar, Union
+from typing import Callable, Iterable, Protocol, Sequence, TypeVar, Union
 
 T = TypeVar("T")
 S = TypeVar("S")
@@ -340,15 +340,15 @@ class Matrix:
     def curve(
         self,
         *ps: Point,
-        steps: Optional[int] = None,
+        steps: int = 0,
         brush: bool = True,
     ):
         """Draw a Bezier curve.
 
         :param *ps: control points of the curve
         :type ps: Point
-        :param steps: amount steps to take, defaults to None
-        :type steps: Optional[int], optional
+        :param steps: amount steps to take, defaults to a sensible amount
+        :type steps: int, optional
         :raises ValueError: raised if to few points are given to define a curve
         :param brush: value to set the pixels to, defaults to True
         :type brush: bool, optional
@@ -356,7 +356,7 @@ class Matrix:
         if len(ps) < 2:
             raise ValueError("Need at least two points to define a curve.")
         else:
-            if steps is None:
+            if steps <= 0:
                 max_segments_lengths = (
                     max(abs(x0 - x1), abs(y0 - y1))
                     for (x0, y0), (x1, y1) in zip(ps, [ps[-1], *ps[:-1]])
