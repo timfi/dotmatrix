@@ -153,3 +153,17 @@ print(m.render())
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢣⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⡀⠀⠀⠀⠀⠀⠀
 ```
+
+## Development
+
+In case you want to add some code to this project your need to first make sure you have [poetry](https://python-poetry.org/) installed. Afterwards you can run the following commands to get your setup up and running:
+
+```sh
+poetry install
+poetry shell
+pre-commit install
+```
+
+Due note that you will have to commit from _inside the virtual environment_ or you need to have the dev-tools installed in your local python installation.
+
+All PRs will be style checked with [isort](https://github.com/PyCQA/isort/), [pydocstyle](https://github.com/PyCQA/pydocstyle/) and [black](https://github.com/psf/black) as well as type checked with [mypy](http://www.mypy-lang.org/).
