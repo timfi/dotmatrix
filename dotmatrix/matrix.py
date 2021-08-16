@@ -1,13 +1,13 @@
 from array import array
 from math import ceil
-from typing import Callable, Iterable, Protocol, Sequence, TypeVar, Union
+from typing import Callable, Iterable, Protocol, Sequence, Tuple, TypeVar, Union
 
 T = TypeVar("T")
 S = TypeVar("S")
 
 
-Point = tuple[int, int]
-PointF = tuple[float, float]
+Point = Tuple[int, int]
+PointF = Tuple[float, float]
 
 
 class Dotted(Protocol):
@@ -370,15 +370,15 @@ class Matrix:
             self.chain(ps[0], *intermediates, ps[-1], brush=brush)
 
 
-def de_casteljau(t: float, ps: Iterable[tuple[float, float]]) -> tuple[float, float]:
+def de_casteljau(t: float, ps: Iterable[Tuple[float, float]]) -> Tuple[float, float]:
     """De Casteljau's algorithm.
 
     :param t: Position to determin the point for
     :type t: float
     :param ps: Controll points
-    :type ps: Iterable[tuple[float, float]]
+    :type ps: Iterable[Tuple[float, float]]
     :return: Final point at position t
-    :rtype: tuple[float, float]
+    :rtype: Tuple[float, float]
     """
     beta = [*ps]
     n = len(beta)

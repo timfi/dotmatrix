@@ -1,0 +1,20 @@
+name: Publish Python Package
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+      - name: Build and publish to PyPI
+        uses: JRubics/poetry-publish@v1
+        with:
+          pypi_token: ${{ secrets.PYPI_TOKEN }}
+          ignore_dev_requirements: "yes"

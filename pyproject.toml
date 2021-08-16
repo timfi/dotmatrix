@@ -2,10 +2,25 @@
 name = "dotmatrix"
 version = "0.1.0"
 description = "A pixel matrix rendered using braille characters."
+license = "MIT"
 authors = ["Tim Fischer <me@timfi.com>"]
+readme = "README.md"
+homepage = "github.com/timfi/dotmatrix"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Utilities",
+    "Typing :: Typed"
+]
+include = ["py.typed"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.7"
 
 [tool.poetry.dev-dependencies]
 black = "^21.7b0"
