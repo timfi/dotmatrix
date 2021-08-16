@@ -7,6 +7,7 @@ S = TypeVar("S")
 
 
 Point = tuple[int, int]
+PointF = tuple[float, float]
 
 
 class Dotted(Protocol):
@@ -348,31 +349,25 @@ class Matrix:
         :type ps: Point
         :param steps: amount steps to take, defaults to None
         :type steps: Optional[int], optional
-        :raises ValueError: raised if to few points are given
+        :raises ValueError: raised if to few points are given to define a curve
         :param brush: value to set the pixels to, defaults to True
         :type brush: bool, optional
         """
         if len(ps) < 2:
             raise ValueError("Need at least two points to define a curve.")
         else:
-            steps = (
-                steps
-                or sum(
+            if steps is None:
+                max_segments_lengths = (
                     max(abs(x0 - x1), abs(y0 - y1))
                     for (x0, y0), (x1, y1) in zip(ps, [ps[-1], *ps[:-1]])
                 )
-                // 4
+                steps = sum(max_segments_lengths) // 4
+            intermediates = (
+                (round(x), round(y))
+                for i in range(steps)
+                for x, y in [de_casteljau(i / steps, ps)]
             )
-            self.chain(
-                ps[0],
-                *(
-                    (round(x), round(y))
-                    for i in range(steps)
-                    for (x, y) in [de_casteljau(i / steps, ps)]
-                ),
-                ps[-1],
-                brush=brush,
-            )
+            self.chain(ps[0], *intermediates, ps[-1], brush=brush)
 
 
 def de_casteljau(t: float, ps: Iterable[tuple[float, float]]) -> tuple[float, float]:
