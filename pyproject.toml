@@ -5,7 +5,7 @@ description = "A pixel matrix rendered using braille characters."
 license = "MIT"
 authors = ["Tim Fischer <me@timfi.com>"]
 readme = "README.md"
-homepage = "github.com/timfi/dotmatrix"
+homepage = "https://github.com/timfi/dotmatrix"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
