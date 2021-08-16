@@ -311,9 +311,10 @@ class Matrix:
 
     def plotf(
         self,
-        xs: Iterable[T],
         f: Callable[[T], S],
+        xs: Iterable[T],
         *,
+        origin: Point = (0, 0),
         to_x: Callable[[T], int] = round,  # type: ignore
         to_y: Callable[[S], int] = round,  # type: ignore
         transpose: bool = False,
@@ -325,6 +326,8 @@ class Matrix:
         :type f: Callable[[T], S]
         :param xs: function inputs
         :type xs: Iterable[T]
+        :param origin: origin to center the plot around, defaults to (0, 0)
+        :type origin: Point, optional
         :param to_x: x-coordinate transformation/cast, defaults to `round`
         :type to_x: Callable[[T], int], optional
         :param to_y: y-coordinate transformation/cast, defaults to `round`
@@ -334,7 +337,8 @@ class Matrix:
         :param brush: value to set the pixels to, defaults to True
         :type brush: bool, optional
         """
-        coords = [to_x(x) for x in xs], [to_y(f(x)) for x in xs]
+        x0, y0 = origin
+        coords = [x0 + to_x(x) for x in xs], [y0 + to_y(f(x)) for x in xs]
         self.plot(*coords[:: 1 - 2 * transpose], brush=brush)
 
     def curve(
