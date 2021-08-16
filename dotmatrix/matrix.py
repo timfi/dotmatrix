@@ -11,7 +11,7 @@ PointF = tuple[float, float]
 
 
 class Dotted(Protocol):
-    """An object that can be drawn a Matrix."""
+    """An object that can be drawn on a Matrix."""
 
     def __dots__(self) -> Iterable[Point]:
         """Generate the pixel positions representing this object.
