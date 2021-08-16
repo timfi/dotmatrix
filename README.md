@@ -5,7 +5,7 @@ _A dot matrix rendered using braille characters._
 
 ## Description
 
-This library provides class called `Matrix` which represents a dot matrix that can be rendered to a string of [Braille](https://en.wikipedia.org/wiki/Braille) characters. In addition the class also provides some usefull functions for drawing all kinds of things onto said matrix.
+This library provides class called `Matrix` which represents a dot matrix that can be rendered to a string of [Braille](https://en.wikipedia.org/wiki/Braille) [characters](https://en.wikipedia.org/wiki/Braille_Patterns). In addition the class also provides some usefull functions for drawing all kinds of things onto said matrix.
 ## Install
 
 Use can install this library from [PyPI](https://pypi.org/project/dotmatrix/):
