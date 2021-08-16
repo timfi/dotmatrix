@@ -26,12 +26,11 @@ jobs:
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
-      - name: Install library
-        run: poetry install --no-interaction
-      - name: Run tests
-        run: |
-          source .venv/bin/activate
-          isort -cvl 120 dotmatrix
-          pydockstyle -v dotmatrix
-          black --check -v dotmatrix
-          mypy dotmatrix
+      - name: Check with isort
+        run: poetry run isort -cvl 120 dotmatrix
+      - name: Check with pydocstyle
+        run: poetry run pydocstyle -v dotmatrix
+      - name: Check with black
+        run: black --check -v dotmatrix
+      - name: Check with mypy
+        run: mypy dotmatrix
