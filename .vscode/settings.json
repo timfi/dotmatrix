@@ -1,5 +1,6 @@
 {
     "python.formatting.provider": "black",
     "editor.formatOnSave": true,
-    "autoDocstring.docstringFormat": "sphinx"
+    "autoDocstring.docstringFormat": "sphinx",
+    "python.analysis.typeCheckingMode": "strict"
 }

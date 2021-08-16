@@ -1,41 +1,21 @@
 [tool.poetry]
-name = "dotcanvas"
+name = "dotmatrix"
 version = "0.1.0"
-description = "A pixel canvas rendered using braille characters."
+description = "A pixel matrix rendered using braille characters."
 authors = ["Tim Fischer <me@timfi.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
 black = "^21.7b0"
 mypy = "^0.910"
-pytest-cov = "^2.12.1"
 pydocstyle = {extras = ["toml"], version = "^6.1.1"}
 isort = "^5.9.3"
-ward = "^0.63.0-beta.0"
-coverage = "^5.5"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.pytest.ini_options]
-minversion = "6.0"
-addopts = "-ra -q"
-testpaths = [
-    "tests",
-]
-
-[tool.ward]
-path = ["tests"]
-capture-output = true
-order = "standard"
-output-mode = "live"
-fail-limit = 20
-progress-style = ["bar"]
-
 [tool.pydocstyle]
 add-ignore = "D104,D100"
-# convention = "google"

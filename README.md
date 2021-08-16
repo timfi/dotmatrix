@@ -1,2 +1,2 @@
-# dotcanvas
-_A pixel canvas rendered using braille characters._
+# dotmatrix
+_A pixel matrix rendered using braille characters._

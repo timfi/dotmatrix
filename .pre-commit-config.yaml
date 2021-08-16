@@ -14,7 +14,7 @@ repos:
         name: Check docstrings
         stages: [commit]
         language: system
-        entry: poetry run pydocstyle dotcanvas
+        entry: poetry run pydocstyle dotmatrix
         types: [python]
         pass_filenames: false
     -   id: mypy
@@ -23,18 +23,11 @@ repos:
         language: system
         entry: poetry run mypy
         types: [python]
-    -   id: ward
-        name: Run unittests
-        stages: [commit]
-        language: system
-        entry: poetry run ward
-        types: [python]
-        pass_filenames: false
     -   id: isort
         name: Sort python imports
         stages: [commit]
         language: system
-        entry: poetry run isort
+        entry: poetry run isort -l 120
         types: [python]
     -   id: black
         name: Format python code
