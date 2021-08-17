@@ -27,7 +27,7 @@ repos:
         name: Sort python imports
         stages: [commit]
         language: system
-        entry: poetry run isort -l 120
+        entry: poetry run isort --profile black
         types: [python]
     -   id: black
         name: Format python code
