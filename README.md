@@ -63,7 +63,7 @@ print(m.render())
 
 This is what it should look like:
 
-![](.resources/img/basic_example.png)
+![](https://github.com/timfi/dotmatrix/blob/root/.resources/img/basic_example.png)
 </details>
 
 ## Drawing functions
@@ -135,7 +135,7 @@ print(m.render())
 
 This is what it should look like:
 
-![](.resources/img/bezier_flower.png)
+![](https://github.com/timfi/dotmatrix/blob/root/.resources/img/bezier_flower.png)
 </details>
 
 ### Function plotting
@@ -182,7 +182,7 @@ print(m.render())
 
 This is what it should look like:
 
-![](.resources/img/plotting.png)
+![](https://github.com/timfi/dotmatrix/blob/root/.resources/img/plotting.png)
 </details>
 
 ## Development

@@ -4,15 +4,31 @@ from typing import List
 
 from .._types import USE_DEFAULT, Point, Union, UseDefault
 
-__all__ = ("Braille",)
+__all__ = ("Block",)
 
 
-# Position of each bit in braille character, in logical order...
-BIT_POS = [0, 3, 1, 4, 2, 5, 6, 7]
+BLOCKS = (
+    "  ",
+    "▀ ",
+    " ▀",
+    "▀▀",
+    "▄ ",
+    "█ ",
+    "▄▀",
+    "█▀",
+    " ▄",
+    "▀▄",
+    " █",
+    "▀█",
+    "▄▄",
+    "█▄",
+    "▄█",
+    "██",
+)
 
 
-class Braille:
-    """A matrix made up of braile dots."""
+class Block:
+    """A matrix made up of unicode block characters."""
 
     __slots__ = (
         "width",
@@ -41,7 +57,7 @@ class Braille:
         self.width = width
         self.height = height
         self._char_width = ceil(width / 2)
-        self._char_height = ceil(height / 4)
+        self._char_height = ceil(height / 2)
         # Use array of unsigned chars for easy data integrity.
         self.data = array("B", [0 for _ in range(self._char_height * self._char_width)])
 
@@ -51,7 +67,7 @@ class Braille:
         :return: render result
         :rtype: str
         """
-        chars = (chr(0x2800 | byte) for byte in self.data)
+        chars = (BLOCKS[0xF & byte] for byte in self.data)
         lines: List[str] = []
         for _ in range(self._char_height):
             line = ""
@@ -63,8 +79,8 @@ class Braille:
     def _pos_to_idx(self, x: int, y: int) -> tuple[int, int]:
         if not (0 <= x < self.width and 0 <= y < self.height):
             raise IndexError(f"Out of bounds: {(x,y)}")
-        (cx, dx), (cy, dy) = divmod(x, 2), divmod(y, 4)
-        return cx + cy * self._char_width, BIT_POS[dx + dy * 2]
+        (cx, dx), (cy, dy) = divmod(x, 2), divmod(y, 2)
+        return cx + cy * self._char_width, (dx + dy * 2)
 
     def __getitem__(self, pos: Point) -> bool:
         """Get the value of a pixel.
@@ -89,3 +105,4 @@ class Braille:
         """
         c, i = self._pos_to_idx(*pos)
         self.data[c] ^= (-val ^ self.data[c]) & (1 << i)
+        self.data[c] &= 0xF

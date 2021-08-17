@@ -27,10 +27,10 @@ jobs:
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
       - name: Check with isort
-        run: poetry run isort -cvl 120 dotmatrix
+        run: poetry run isort -cv --profile black dotmatrix
       - name: Check with pydocstyle
         run: poetry run pydocstyle -v dotmatrix
       - name: Check with black
-        run: black --check -v dotmatrix
+        run: poetry run black --check -v dotmatrix
       - name: Check with mypy
-        run: mypy dotmatrix
+        run: poetry run mypy dotmatrix

@@ -1,3 +1,4 @@
-from .braille import BrailleDisplay
+from .block import Block
+from .braille import Braille
 
-__all__ = ("BrailleDisplay",)
+__all__ = ("Braille", "Block")
