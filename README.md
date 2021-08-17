@@ -147,7 +147,7 @@ from dotmatrix import Matrix
 
 m = Matrix(64, 64)
 
-n.rectangle((0, 0), (63, 63))
+m.rectangle((0, 0), (63, 63))
 m.plotf(
     lambda x: 0.005 * x ** 3,
     range(-31, 31),
