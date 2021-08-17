@@ -2,7 +2,7 @@ from array import array
 from math import ceil
 from typing import List
 
-from ._types import USE_DEFAULT, Point, Union, UseDefault
+from .._types import USE_DEFAULT, Point, Union, UseDefault
 
 __all__ = ("BrailleDisplay",)
 
