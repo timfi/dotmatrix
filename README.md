@@ -69,32 +69,178 @@ This is what it should look like:
 ## Drawing functions
 
 As of now this library contains the following drawing functions:
-- `scatter` – Scatters some points.
+- `scatter` – Draws some points.
+- `iscatter` – Draws some points (from an iterator).
 - `show` – Draws an object implementing the `Dotted` protocol.
 - `line` – Draws a line.
 - `chain` – Draws a chain of segments.
 - `polygon` – Draws a polygon.
-- `rectangle` – Draws an axis aligned rectangle. (from a simplified representation, i.e. from two opposing corners)
+- `rectangle` – Draws an axis aligned rectangle. (from two opposing corners)
 - `cricle` – Draws a circle.
 - `ellipse` – Draws an axis aligned ellipse.
+- `curve` – Draws a [Bézier curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve).
 - `plot` – Plots a series of XY-coordinates. (matplotlib.pyplot style)
 - `plotf` – Plots a function.
-- `curve` – Draws a [Bézier curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve).
 
-Implementing the `Dotted` protocol for any class comes down to adding a `__dots__` function to your class:
+<details><summary>Dotted protocol</summary>
 
+---
+```python
+class Dotted(Protocol):
+    """An object that can be drawn on a Matrix."""
+
+    def __dots__(self) -> Iterable[Point]:
+        """Generate the pixel positions representing this object.
+
+        :return: pixels to draw
+        :rtype: Iterable[Point]
+        """
 ```
-def __dots__(self) -> Iterable[Tuple[int, int]]:
-    """Generate the pixel positions representing this object."""
-```
+---
+</details>
 
 ⚠️  _The origin of the coordinate system, i.e. `(0, 0)`, is at the top left corner!_
 
 
+## Does it need to be Braille characters?
+
+No, no it does not. It's just the default; you are free to choose how you want to render things. To facilitate this any given `Matrix` object internally makes use of an object implementing the `Display` protocol. For example this library implements, next to the `Braille` displays, some more display like `Block` or `Unit`.
+
+<details><summary>Display protocol</summary>
+
+---
+```python
+class Display(Protocol[V, O]):
+    """An object that can be used as a matrix display."""
+
+    width: int
+    height: int
+    default_brush: V
+
+    def __init__(
+        self, width: int, height: int, *, default_brush: Union[V, UseDefault]
+    ) -> None:
+        """Initialize a matrix object.
+
+        :param width: width of the matrix
+        :type width: int
+        :param height: height of the matrix
+        :type height: int
+        """
+
+    def render(self) -> O:
+        """Render the current matrix state.
+
+        :return: render result
+        :rtype: O
+        """
+
+    def __getitem__(self, pos: Point) -> V:
+        """Get the value of a pixel.
+
+        :param pos: position of pixel to get
+        :type pos: Point
+        :raises IndexError: requested pixel is out of the bounds of the matrix
+        :return: state of the pixel
+        :rtype: bool
+        """
+
+    def __setitem__(self, pos: Point, val: V):
+        """Set the value of a pixel.
+
+        :param pos: position of the pixel to set
+        :type pos: Point
+        :param val: the value to set the pixel to
+        :type val: bool
+        :raises IndexError: requested pixel is out of the bounds of the matrix
+        """
+```
+---
+</details>
+<details><summary>Block display</summary>
+
+---
+**Code**
+
+```python
+from dotmatrix import Matrix
+from dotmatrix.displays import Block
+
+# Using a different display is as simple as passing it
+# into the display-argument of the initializer.
+m = Matrix(16, 16, display=Block)
+
+m.rectangle((0, 0), (15, 15))
+m.circle((7, 7), 7)
+
+print(m.render())
+```
+
+**Output**
+
+```
+█▀▀██▀▀▀▀▀██▀▀▀█
+█▄▀         ▀▄ █
+█▀           ▀▄█
+█             ██
+█             ██
+██           █ █
+█ ▀▄▄     ▄▄▀  █
+█▄▄▄▄█████▄▄▄▄▄█
+```
+
+---
+</details>
+<details><summary>Unit display</summary>
+
+---
+**Code**
+
+```python
+from dotmatrix import Matrix
+from dotmatrix.displays import Block
+
+# The following isn't required for using the Unit display.
+# It's just here to demonstrate that you "pre-instantiate"
+# a display and construct a Matrix object from it using
+# Matrix.from_display.
+d = Unit(16, 16, chars=["  ", "##"])
+m = Matrix.from_display(d)
+
+m.curve((0, 0), (15, 0), (0, 15), (15, 15))
+
+print(m.render())
+```
+
+**Output**
+
+```
+########
+        ####
+            ##
+              ##
+              ##
+              ##
+              ##
+              ##
+                ##
+                ##
+                ##
+                ##
+                ##
+                  ##
+                    ##
+                      ##########
+```
+
+---
+</details>
+
 ## More examples
 
-### Bézier curves
+<details><summary>Bézier flower</summary>
 
+---
 **Code**
 
 ```python
@@ -138,8 +284,12 @@ This is what it should look like:
 ![](https://github.com/timfi/dotmatrix/blob/root/.resources/img/bezier_flower.png)
 </details>
 
-### Function plotting
+---
+</details>
 
+<details><summary>Function plotting</summary>
+
+---
 **Code**
 
 ```python
@@ -185,6 +335,9 @@ This is what it should look like:
 ![](https://github.com/timfi/dotmatrix/blob/root/.resources/img/plotting.png)
 </details>
 
+---
+</details>
+
 ## Development
 
 In case you want to add some code to this project your need to first make sure you have [poetry](https://python-poetry.org/) installed. Afterwards you can run the following commands to get your setup up and running:
@@ -197,4 +350,4 @@ pre-commit install
 
 Due note that you will have to commit from _inside the virtual environment_ or you need to have the dev-tools installed in your local python installation.
 
-All PRs will be style checked with [isort](https://github.com/PyCQA/isort/), [pydocstyle](https://github.com/PyCQA/pydocstyle/) and [black](https://github.com/psf/black) as well as type checked with [mypy](http://www.mypy-lang.org/).
+All PRs will be style checked with [isort](https://github.com/PyCQA/isort/), [pydocstyle](https://github.com/PyCQA/pydocstyle/) and [black](https://github.com/psf/black) as well as type checked with [mypy](http://www.mypy-lang.org/). In addition to this all PRs should target the `dev`-branch and contain as many signed commits as possible (better yet _only_ signed commits 😉 ). If you have no clue how or why to sign your commits have a look at the [GitHub docs](https://docs.github.com/en/github/authenticating-to-github/managing-commit-signature-verification) on this topic.

@@ -6,7 +6,6 @@ V = TypeVar("V")
 O = TypeVar("O", covariant=True)
 
 Point = Tuple[int, int]
-PointF = Tuple[float, float]
 
 
 class UseDefault:
