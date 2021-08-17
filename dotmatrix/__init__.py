@@ -1,6 +1,6 @@
-from .displays import *
-from .matrix import *
+from . import displays
+from .matrix import Matrix
 
 __version__ = "0.2.0"
 
-__all__ = matrix.__all__ + displays.__all__  # type: ignore
+__all__ = ("Matrix", "displays")
