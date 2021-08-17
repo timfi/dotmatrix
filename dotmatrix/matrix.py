@@ -13,7 +13,7 @@ from typing import (
 )
 
 from ._types import USE_DEFAULT, Display, Dotted, Point, UseDefault
-from .displays import BrailleDisplay
+from .displays import Braille
 
 __all__ = ("Matrix",)
 
@@ -35,7 +35,7 @@ class Matrix(Generic[V, O]):
         height: int,
         *,
         default_brush: Union[V, UseDefault] = USE_DEFAULT,
-        display: Union[Display[V, O], Type[Display[V, O]]] = BrailleDisplay,  # type: ignore
+        display: Union[Display[V, O], Type[Display[V, O]]] = Braille,  # type: ignore
     ) -> None:
         """Initialize a matrix object.
 
