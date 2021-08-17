@@ -13,7 +13,7 @@ from typing import (
 )
 
 from ._types import USE_DEFAULT, Display, Dotted, Point, UseDefault
-from .display import BrailleDisplay
+from .displays import BrailleDisplay
 
 __all__ = ("Matrix",)
 
