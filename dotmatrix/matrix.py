@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Callable, Generic, Iterable, Sequence, Type, TypeVar, Union, cast
 
 from ._types import USE_DEFAULT, Display, Dotted, Point, UseDefault
-from .algorithims import (
+from .algorithms import (
     bresenham_circle,
     bresenham_ellipse,
     bresenham_line,
